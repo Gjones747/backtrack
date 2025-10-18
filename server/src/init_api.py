@@ -28,9 +28,9 @@ vector_bucket = "tester"
 index_name = "movies"
 
 texts = [
-    "Star Wars: A farm boy …",
-    "Jurassic Park: Scientists create dinosaurs …",
-    "Finding Nemo: A father fish searches the ocean …"
+    "Star Wars: A farm boy goes to space",
+    "Jurassic Park: Scientists create dinosaurs…",
+    "Finding Nemo: A father fish searches the ocean"
 ]
 
 embeddings = []

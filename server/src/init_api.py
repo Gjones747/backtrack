@@ -2,9 +2,26 @@
 import boto3
 import json
 
-# Create Bedrock Runtime and S3 Vectors clients in the AWS Region of your choice. 
-bedrock = boto3.client("bedrock-runtime", region_name="us-west-2")
-s3vectors = boto3.client("s3vectors", region_name="us-west-2")
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Create Bedrock and S3 Vectors clients using credentials from env
+bedrock = boto3.client(
+    "bedrock-runtime",
+    aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
+    aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"),
+    region_name=os.getenv("AWS_DEFAULT_REGION")
+)
+
+s3vectors = boto3.client(
+    "s3vectors",
+    aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
+    aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"),
+    region_name=os.getenv("AWS_DEFAULT_REGION")
+)
 
 # Texts to convert to embeddings.
 texts = [

@@ -18,13 +18,71 @@ export default function LostContent() {
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  async function getAndDisplayVectorData(type, data) {
+    // 1. Declare 'result' outside the try block
+    let result = null; 
+
+    try {
+      const response = await fetch(`https://backtrack.kaolun.site/getVector?type=${type}&data=${data}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        // If the response status is 4xx or 5xx
+        throw new Error(`Network response was not ok: ${response.status} ${response.statusText}`);
+      }
+
+      // Assign the successfully parsed data to 'result'
+      result = await response.json();
+      console.log("✅ Success:", result);
+
+      // 2. Put the logic that uses 'result' INSIDE the try block
+      
+      // Safety check: Ensure the result is an array and has at least one item
+      if (!Array.isArray(result) || result.length === 0) {
+          console.error("❌ Error: Result is empty or not an array.");
+          return; // Stop execution if data is bad
+      }
+
+
+      // 3. Remove unnecessary 'await' for property access
+      const firstResult = result[0];
+      let image = firstResult.metadata.image_data;
+      image = `data:image/png;base64,${image}`
+      console.log(image)
+      let location = firstResult.metadata.location;
+      let contact = firstResult.metadata.contact;
+      
+      // Call the display function
+      displayResult({
+          imageBase64: image,
+          location: location,
+          contact: contact,
+      });
+
+    } catch (error) {
+      // This catches network errors, JSON parsing errors, and the error thrown above
+      console.error("❌ Error processing vector data:", error.message);
+    }
+  }
+
   const search = () => {
-    if (file) {
+    if (file || text) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        const base64String = (reader.result as string).split(",")[1];
-        const output = { base64String, text };
-
+        let reqResult;
+        if (file) {
+          const base64String = (reader.result as string).split(",")[1];
+          const output = { base64String, text };
+          reqResult = getAndDisplayVectorData("image", base64String)
+        } else {
+          const output = { text }
+        }
+        
+        console.log(result)
         // get response as a json, input it into dummy response, make sure to rename json name thing accordingly throughout code
 
         // Example dummy response
@@ -34,7 +92,12 @@ export default function LostContent() {
           contact: "425",
         });
       };
-      reader.readAsDataURL(file);
+      if (file) {
+        reader.readAsDataURL(file);
+      } else {
+        getAndDisplayVectorData("description", text)
+    
+      }
     } else {
       setShake(true);
       setTimeout(() => setShake(false), 400);
@@ -149,7 +212,7 @@ export default function LostContent() {
       >
         <h3>We found a match!</h3>
         <img
-          src={placeHolderImg || result.imageBase64}
+          src={result.imageBase64 || placeHolderImg}
           style={{ width: "75%" }}
           alt="response"
         />

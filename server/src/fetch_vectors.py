@@ -1,24 +1,22 @@
-# Query a vector index with an embedding from Amazon Titan Text Embeddings V2.
 import boto3 
 import json 
-import os
 from dotenv import load_dotenv
-from botocore.exceptions import ClientError
+from PIL import Image
+from transformers import CLIPProcessor, CLIPModel
+import torch
+import os
 
 load_dotenv()
+
+input_file = "new_inputapple.jpg"
+
+model_id = 'laion/CLIP-ViT-H-14-laion2B-s32B-b79K'
+model = CLIPModel.from_pretrained(model_id)
+processor = CLIPProcessor.from_pretrained(model_id)
 
 REGION = os.getenv("AWS_DEFAULT_REGION")
 AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
-
-
-
-bedrock = boto3.client(
-    "bedrock-runtime",
-    aws_access_key_id=AWS_ACCESS_KEY_ID,
-    aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
-    region_name=REGION
-)
 
 s3vectors = boto3.client(
     "s3vectors",
@@ -27,39 +25,54 @@ s3vectors = boto3.client(
     region_name=REGION
 )
 
-# Query text to convert to an embedding. 
-input_text = "going into the sea"
+# ---- Image Embedding ----
+def load_and_preprocess_image(image_path):
+    image = Image.open(image_path)
+    return processor(text=None, images=image, return_tensors="pt", padding=True)
 
-# Generate the vector embedding.
-response = bedrock.invoke_model(
-    modelId="amazon.titan-embed-text-v2:0",
-    body=json.dumps({"inputText": input_text})
-) 
+def get_image_embeddings(image_path):
+    inputs = load_and_preprocess_image(image_path)
+    with torch.no_grad():
+        image_features = model.get_image_features(**inputs)
+    return image_features[0].numpy()
 
-# Extract embedding from response.
-model_response = json.loads(response["body"].read())
-embedding = model_response["embedding"]
+# ---- Text Embedding ----
+def get_text_embeddings(text):
+    inputs = processor(text=[text], images=None, return_tensors="pt", padding=True)
+    with torch.no_grad():
+        text_features = model.get_text_features(**inputs)
+    return text_features[0].numpy()
 
-# Query vector index.
-response = s3vectors.query_vectors(
-    vectorBucketName="tester",
-    indexName="movies",
-    queryVector={"float32": embedding}, 
-    topK=3, 
-    returnDistance=True,
-    returnMetadata=True
-)
-print(json.dumps(response["vectors"][0], indent=2))
+# ---- Query Methods ----
+def query_by_image(image_path, top_k=3):
+    embedding = get_image_embeddings(image_path)
+    response = s3vectors.query_vectors(
+        vectorBucketName="tester",
+        indexName="apples",
+        queryVector={"float32": embedding.tolist()},
+        topK=top_k,
+        returnDistance=True,
+        returnMetadata=True
+    )
+    print(json.dumps(response["vectors"], indent=2))
 
-# # Query vector index with a metadata filter.
-# response = s3vectors.query_vectors(
-#     vectorBucketName="tester",
-#     indexName="movies",
-#     queryVector={"float32": embedding}, 
-#     topK=3, 
-#     filter={"genre": "scifi"},
-#     returnDistance=True,
-#     returnMetadata=True
-# )
-# [0]
-    
+def query_by_text(query_text, top_k=3):
+    embedding = get_text_embeddings(query_text)
+    response = s3vectors.query_vectors(
+        vectorBucketName="tester",
+        indexName="apples",
+        queryVector={"float32": embedding.tolist()},
+        topK=top_k,
+        returnDistance=True,
+        returnMetadata=True
+    )
+    print(json.dumps(response["vectors"], indent=2))
+
+# ---- Example usage ----
+if __name__ == "__main__":
+    # print("🔍 Searching by image:")
+    # query_by_image(input_file)
+
+    print("\n🔍 Searching by text ('red apple'):")
+    x = input("WHAT DO YOU WANT TO SEARCH FOR: ")
+    query_by_text(x)

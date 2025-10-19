@@ -3,8 +3,15 @@ import json
 import os
 from dotenv import load_dotenv
 from botocore.exceptions import ClientError
+from PIL import Image
+from transformers import CLIPProcessor, CLIPModel
+import torch
 
 load_dotenv()
+
+model_id = 'laion/CLIP-ViT-H-14-laion2B-s32B-b79K'
+model = CLIPModel.from_pretrained(model_id)
+processor = CLIPProcessor.from_pretrained(model_id)
 
 REGION = os.getenv("AWS_DEFAULT_REGION")
 AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
@@ -24,53 +31,40 @@ s3vectors = boto3.client(
     region_name=REGION
 )
 
-vector_bucket = "tester"
-index_name = "movies"
+def load_and_preprocess_image(image_path):
+    image = Image.open(image_path)
+    return processor(text=None, images=image, return_tensors="pt", padding=True)
 
-texts = [
-    "Star Wars: A farm boy goes to space",
-    "Jurassic Park: Scientists create dinosaurs…",
-    "Finding Nemo: A father fish searches the ocean"
-]
+def get_image_embeddings(image_path):
+    inputs = load_and_preprocess_image(image_path)
+    with torch.no_grad():
+        image_features = model.get_image_features(**inputs)
+    return image_features[0].numpy()
 
-embeddings = []
-for text in texts:
-    response = bedrock.invoke_model(
-        modelId="amazon.titan-embed-text-v2:0",
-        body=json.dumps({"inputText": text})
-    )
-    response_body = json.loads(response["body"].read())
-    embedding = response_body["embedding"]
-    print("Embedding length:", len(embedding))
-    embeddings.append(embedding)
+def list_fruit_files_upload():
+    files = os.listdir('fruits')
+    vectors = []
+    batch_size = 10
+    for file in files:
+        embedding = get_image_embeddings(f"fruits/{file}")
+        vectors.append({
+            "key": file,
+            "data": {"float32": embedding.tolist()},
+            "metadata": {"source_image_name": file, "genre": "fruits"}
+        })
+        if len(vectors) >= batch_size:
+            s3vectors.put_vectors(
+                vectorBucketName="tester",
+                indexName="apples",
+                vectors=vectors
+            )
+            vectors = []
+    if vectors:
+        s3vectors.put_vectors(
+            vectorBucketName="tester",
+            indexName="apples",
+            vectors=vectors
+        )
 
-vectors_to_put = [
-    {
-        "key": "Star Wars",
-        "data": {"float32": embeddings[0]},
-        "metadata": {"source_text": texts[0], "genre": "scifi"}
-    },
-    {
-        "key": "Jurassic Park",
-        "data": {"float32": embeddings[1]},
-        "metadata": {"source_text": texts[1], "genre": "scifi"}
-    },
-    {
-        "key": "Finding Nemo",
-        "data": {"float32": embeddings[2]},
-        "metadata": {"source_text": texts[2], "genre": "family"}
-    },
-]
-
-try:
-    resp = s3vectors.put_vectors(
-        vectorBucketName=vector_bucket,
-        indexName=index_name,
-        vectors=vectors_to_put
-    )
-    print("PutVectors response:", resp)
-except ClientError as e:
-    print("ClientError:", e)
-    print("Response code:", e.response["Error"]["Code"])
-    print("Message:", e.response["Error"]["Message"])
-    raise
+if __name__ == "__main__":
+    list_fruit_files_upload()

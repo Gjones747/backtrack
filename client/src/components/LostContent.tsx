@@ -80,7 +80,7 @@ export default function LostContent() {
 
   const buttonStyle: React.CSSProperties = {
     marginTop: "6px",
-    backgroundColor: "black",
+    backgroundColor: "#073F61",
     color: "white",
     border: "none",
     borderRadius: "8px",

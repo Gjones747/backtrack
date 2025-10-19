@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Webcam from "react-webcam";
+import { FaCamera } from "react-icons/fa";
 import "../css/Shake.css";
 
 export default function FoundContent({ onClose }) {
@@ -11,6 +12,9 @@ export default function FoundContent({ onClose }) {
     outline: "3px solid #23415c",
     display: "flex",
     cursor: "pointer",
+    padding: "0",
+    alignItems: "center",
+    justifyContent: "center",
   };
 
   const containerStyle: React.CSSProperties = {
@@ -50,7 +54,7 @@ export default function FoundContent({ onClose }) {
     width: "50px",
     height: "50px",
     borderRadius: "12%",
-    backgroundColor: "black",
+    backgroundColor: "#073F61",
     color: "white",
     display: "flex",
     justifyContent: "center",
@@ -148,7 +152,6 @@ export default function FoundContent({ onClose }) {
   const { width, height } = dimensions;
   const isMobile = width < 768;
 
-  // ✅ Styles for the “Thanks!” message animation
   const thanksStyle: React.CSSProperties = {
     transition: "all 0.6s ease",
     transform: isSaved ? "scale(1)" : "scale(0.9)",
@@ -192,7 +195,7 @@ export default function FoundContent({ onClose }) {
           )}
 
           {!capturedImage ? (
-            <button style={circleButtonStyle} onClick={capture}></button>
+            <button style={circleButtonStyle} onClick={capture}><FaCamera style={{color:"#073F61", height:"50px%", width:"50%"}}/></button>
           ) : (
             <div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
               <button style={squareButtonStyle} onClick={retake}>

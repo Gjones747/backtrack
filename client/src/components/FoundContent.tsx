@@ -3,19 +3,6 @@ import Webcam from "react-webcam";
 import { FaCamera } from "react-icons/fa";
 import "../css/Shake.css";
 
-export default function FoundContent({ onClose }) {
-  const circleButtonStyle: React.CSSProperties = {
-    width: "50px",
-    height: "50px",
-    borderRadius: "35%",
-    backgroundColor: "white",
-    outline: "3px solid #23415c",
-    display: "flex",
-    cursor: "pointer",
-    padding: "0",
-    alignItems: "center",
-    justifyContent: "center",
-  };
 
   const containerStyle: React.CSSProperties = {
     position: "relative",

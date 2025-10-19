@@ -10,8 +10,6 @@ import base64
 from io import BytesIO
 import io
 import hashlib
-from wand.image import Image as im
-from fetch_vectors import query_by_text
 
 
 load_dotenv()

@@ -90,8 +90,11 @@ export default function FoundContent({ onClose }) {
     }
   }, []);
 
-
-  async function sendData(imageData:string, location:string, contact:string) {
+  async function sendData(
+    imageData: string,
+    location: string,
+    contact: string
+  ) {
     const data = {
       image: imageData,
       location: location,
@@ -125,7 +128,7 @@ export default function FoundContent({ onClose }) {
       const result = { cleaned, location, contact };
       console.log(result);
 
-      sendData(cleaned, location, contact)
+      sendData(cleaned, location, contact);
 
       setIsSaved(true);
     } else {
@@ -172,6 +175,9 @@ export default function FoundContent({ onClose }) {
               ref={webcamRef}
               width={isMobile ? width * 0.9 : width * 0.5}
               height={isMobile ? height * 0.4 : height * 0.5}
+              videoConstraints={{
+                facingMode: isMobile ? "user" : "environment",
+              }}
               mirrored
               screenshotFormat="image/jpeg"
               style={{
@@ -195,7 +201,11 @@ export default function FoundContent({ onClose }) {
           )}
 
           {!capturedImage ? (
-            <button style={circleButtonStyle} onClick={capture}><FaCamera style={{color:"#073F61", height:"50px%", width:"50%"}}/></button>
+            <button style={circleButtonStyle} onClick={capture}>
+              <FaCamera
+                style={{ color: "#073F61", height: "50px%", width: "50%" }}
+              />
+            </button>
           ) : (
             <div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
               <button style={squareButtonStyle} onClick={retake}>
@@ -244,7 +254,7 @@ export default function FoundContent({ onClose }) {
           style={{
             ...thanksStyle,
             width: "100%",
-            overflowX: "hidden", 
+            overflowX: "hidden",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",

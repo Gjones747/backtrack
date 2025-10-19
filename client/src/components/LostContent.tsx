@@ -42,7 +42,7 @@ export default function LostContent() {
       // 2. Put the logic that uses 'result' INSIDE the try block
       
       // Safety check: Ensure the result is an array and has at least one item
-      if (!Array.isArray(result) || result.length === 0) {
+      if (!Array.isArray(result)) {
           console.error("❌ Error: Result is empty or not an array.");
           return; // Stop execution if data is bad
       }

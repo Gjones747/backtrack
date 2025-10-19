@@ -17,6 +17,7 @@ import Squiggle from "./assets/squiggle.png";
 import Curve from "./assets/Curve.png";
 import "./css/App.css";
 
+
 function App() {
   const [open, setOpen] = React.useState(false);
   const [modalType, setModalType] = React.useState<"lost" | "found" | null>(

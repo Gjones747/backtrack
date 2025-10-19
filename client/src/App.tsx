@@ -44,6 +44,7 @@ function App() {
       <img src={Hat} alt="Hat" className="decor hat" />
       <img src={Coat} alt="Coat" className="decor coat" />
       <img src={Bike} alt="Bike" className="decor bike" />
+
       <img src={Dot8} alt="Dot8" className="decor dot8"/>
       <img src={Dot9} alt="Dot9" className="decor dot9"/>
       <img src={X} alt="X" className="decor x"/>
@@ -64,7 +65,7 @@ function App() {
 
       <Modal open={open} onClose={closeModal}>
         {modalType === "lost" && <LostContent />}
-        {modalType === "found" && <FoundContent />}
+        {modalType === "found" && <FoundContent onClose={closeModal} />}
       </Modal>
       <div className="bottom-bar"></div>
     </div>

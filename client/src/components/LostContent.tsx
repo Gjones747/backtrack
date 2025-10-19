@@ -170,6 +170,15 @@ export default function LostContent() {
     <>
       <div style={{ color: "black" }}>Upload an image of your item.</div>
 
+
+      <div
+        id="uploadImg"
+        className={shake ? "shake" : ""}
+        style={imageWrapperStyle}
+      >
+        <img src={preview || placeHolImg} alt="Preview" style={imageStyle} />
+      </div>
+
       <input
         type="file"
         accept="image/*"

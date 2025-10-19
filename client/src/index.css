@@ -1,5 +1,13 @@
+@font-face {
+  font-family: "Mont"; /* Choose a name for your font family */
+  src: local("Mont"),
+    url("./fonts/Montserrat-Bold.ttf") format("truetype"); /* Adjust path and format */
+  font-weight: normal;
+  font-style: normal;
+}
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Mont", system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 

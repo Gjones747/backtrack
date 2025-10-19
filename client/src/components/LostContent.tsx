@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
-import placeHolImg from "../assets/download.png";
+import uploadImg from "../assets/download.png";
+import placeHolderImg from "../assets/placeholder.png";
 import "../css/Shake.css";
 
 export default function LostContent() {
@@ -7,7 +8,14 @@ export default function LostContent() {
   const [text, setText] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
-  const [shake, setShake] = useState(false); // 👈 add this
+  const [shake, setShake] = useState(false);
+  const [stage, setStage] = useState<"input" | "result">("input");
+  const [result, setResult] = useState<{
+    imageBase64: string;
+    location: string;
+    contact: string;
+  } | null>(null);
+
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const search = () => {
@@ -15,15 +23,40 @@ export default function LostContent() {
       const reader = new FileReader();
       reader.onloadend = () => {
         const base64String = (reader.result as string).split(",")[1];
-        const output = {base64String, text};
+        const output = { base64String, text };
         console.log(output);
-        // do something with this !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+        // get response as a json, input it into dummy response, make sure to rename json name thing accordingly throughout code
+
+        // Example dummy response
+        displayResult({
+          imageBase64: "fred",
+          location: "town",
+          contact: "425",
+        });
       };
       reader.readAsDataURL(file);
     } else {
       setShake(true);
-      setTimeout(() => setShake(false), 400); // match animation duration
+      setTimeout(() => setShake(false), 400);
     }
+  };
+
+  const displayResult = (response: {
+    imageBase64: string;
+    location: string;
+    contact: string;
+  }) => {
+    setStage("result");
+    setResult(response);
+  };
+
+  const reset = () => {
+    setFile(null);
+    setPreview(null);
+    setText("");
+    setStage("input");
+    setResult(null);
   };
 
   const textUpdate = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
@@ -39,19 +72,6 @@ export default function LostContent() {
     }
   };
 
-  const imageWrapperStyle: React.CSSProperties = {
-    width: "75%",
-    maxWidth: "400px",
-    maxHeight: "300px",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    overflow: "hidden",
-    border: "1px solid #ccc",
-    borderRadius: "8px",
-    backgroundColor: "#f9f9f9",
-  };
-
   const imageStyle: React.CSSProperties = {
     width: "100%",
     height: "100%",
@@ -64,6 +84,23 @@ export default function LostContent() {
     color: "white",
     border: "none",
     borderRadius: "8px",
+    padding: "6px 12px",
+    cursor: "pointer",
+    alignSelf: "center",
+  };
+
+  const clickableImageStyle: React.CSSProperties = {
+    width: "75%",
+    maxWidth: "400px",
+    maxHeight: "300px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    overflow: "hidden",
+    border: "none",
+    outline: "none",
+    backgroundColor: "#f8f1d8",
+    marginTop: "6px",
     padding: "6px 12px",
     cursor: "pointer",
     alignSelf: "center",
@@ -95,9 +132,44 @@ export default function LostContent() {
     marginTop: "2px",
   };
 
+  if (stage === "result" && result) {
+    return (
+      <div
+        style={{
+          color: "black",
+          textAlign: "center",
+          height: "100vh", // take full screen height
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "5px", // tight spacing between elements
+          padding: "12px",
+        }}
+      >
+        <h3>We found a match!</h3>
+        <img
+          src={placeHolderImg || result.imageBase64}
+          style={{ width: "75%" }}
+          alt="response"
+        />
+        <div>
+          <strong>Location:</strong> {result.location}
+        </div>
+        <div>
+          <strong>Contact:</strong> {result.contact}
+        </div>
+        <button style={buttonStyle} onClick={reset}>
+          Search again
+        </button>
+      </div>
+    );
+  }
+
   return (
     <>
       <div style={{ color: "black" }}>Upload an image of your item.</div>
+
 
       <div
         id="uploadImg"
@@ -115,8 +187,12 @@ export default function LostContent() {
         style={{ display: "none" }}
       />
 
-      <button style={buttonStyle} onClick={handleUploadClick}>
-        Upload
+      <button
+        style={clickableImageStyle}
+        className={shake ? "shake" : ""}
+        onClick={handleUploadClick}
+      >
+        <img src={preview || uploadImg} alt="Preview" style={imageStyle} />
       </button>
 
       <div style={{ color: "black" }}>

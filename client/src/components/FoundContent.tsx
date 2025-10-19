@@ -86,11 +86,42 @@ export default function FoundContent({ onClose }) {
     }
   }, []);
 
+
+  async function sendData(imageData:string, location:string, contact:string) {
+    const data = {
+      image: imageData,
+      location: location,
+      description: "",
+      contact: contact,
+    };
+
+    try {
+      const response = await fetch("https://backtrack.kaolun.site/addVector", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const result = await response.json();
+      console.log("✅ Success:", result);
+    } catch (error) {
+      console.error("❌ Error:", error);
+    }
+  }
+
   const handleFinalSave = () => {
     if (location && contact && capturedImage) {
       const cleaned = capturedImage.split(",")[1];
       const result = { cleaned, location, contact };
       console.log(result);
+
+      sendData(cleaned, location, contact)
 
       setIsSaved(true);
     } else {

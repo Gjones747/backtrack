@@ -12,7 +12,7 @@ input_file = "new_inputapple.jpg"
 
 model_id = 'laion/CLIP-ViT-H-14-laion2B-s32B-b79K'
 model = CLIPModel.from_pretrained(model_id)
-processor = CLIPProcessor.from_pretrained(model_id)
+processor = CLIPProcessor.from_pretrained(model_id, use_fast=True)
 
 REGION = os.getenv("AWS_DEFAULT_REGION")
 AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")

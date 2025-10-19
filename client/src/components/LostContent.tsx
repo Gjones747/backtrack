@@ -14,8 +14,7 @@ export default function LostContent() {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        const base64String = reader.result as string;
-        console.log(base64String);
+        const base64String = (reader.result as string).split(",")[1];
         const output = {base64String, text};
         console.log(output);
         // do something with this !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -102,7 +101,7 @@ export default function LostContent() {
 
       <div
         id="uploadImg"
-        className={shake ? "shake" : ""} // 👈 conditionally add shake
+        className={shake ? "shake" : ""}
         style={imageWrapperStyle}
       >
         <img src={preview || placeHolImg} alt="Preview" style={imageStyle} />

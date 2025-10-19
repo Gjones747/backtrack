@@ -83,3 +83,4 @@ body, #root {
 .hat { top: 30px; right: 120px; }
 .coat { bottom: 40px; right: 40px; width: 85px;}
 .bike { bottom: 120px; left: 70px; width: 100px;}
+.Overall { position: absolute; bottom: 400px; left: 30px; width: 100px;}

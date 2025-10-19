@@ -6,8 +6,8 @@ import FoundButton from "./assets/found.png";
 import LostContent from "./components/LostContent";
 import LostButton from "./assets/lost.png";
 import Hat from "./assets/hat.png";
-import Coat from "./assets/coat.png"
-import Bike from "./assets/bike.png"
+import Coat from "./assets/coat.png";
+import Bike from "./assets/bike.png";
 import "./css/App.css";
 
 function App() {
@@ -38,7 +38,7 @@ function App() {
       <img src={Hat} alt="Hat" className="decor hat" />
       <img src={Coat} alt="Coat" className="decor coat" />
       <img src={Bike} alt="Bike" className="decor bike" />
-      
+
       <div id="main-buttons-group">
         <ButtonDiv onClick={lostClick}>
           <img className="main-button" src={LostButton} alt="Button Icon" />
@@ -50,7 +50,7 @@ function App() {
 
       <Modal open={open} onClose={closeModal}>
         {modalType === "lost" && <LostContent />}
-        {modalType === "found" && <FoundContent />}
+        {modalType === "found" && <FoundContent onClose={closeModal} />}
       </Modal>
       <div className="bottom-bar"></div>
     </div>

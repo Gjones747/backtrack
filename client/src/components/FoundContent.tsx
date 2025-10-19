@@ -48,6 +48,7 @@ export default function FoundContent({ onClose }) {
     boxSizing: "border-box",
     borderRadius: "8px",
     padding: "6px",
+    fontSize: "16px",
   };
 
   const squareButtonStyle: React.CSSProperties = {
@@ -174,6 +175,7 @@ export default function FoundContent({ onClose }) {
               height={isMobile ? height * 0.4 : height * 0.5}
               mirrored
               screenshotFormat="image/jpeg"
+              videoConstraints={{ facingMode: isMobile ? "environment" : "user" }}
               style={{
                 borderRadius: "12px",
                 objectFit: "cover",

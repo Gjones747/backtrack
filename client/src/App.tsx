@@ -1,35 +1,60 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from "react";
+import ButtonDiv from "./components/Button";
+import Modal from "./components/Modal";
+import FoundContent from "./components/FoundContent";
+import FoundButton from "./assets/found.png";
+import LostContent from "./components/LostContent";
+import LostButton from "./assets/lost.png";
+import Hat from "./assets/hat.png";
+import Coat from "./assets/coat.png"
+import Bike from "./assets/bike.png"
+import "./css/App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [open, setOpen] = React.useState(false);
+  const [modalType, setModalType] = React.useState<"lost" | "found" | null>(
+    null
+  );
+
+  const openModal = () => {
+    setOpen(true);
+  };
+
+  const closeModal = () => {
+    setOpen(false);
+  };
+
+  const lostClick = () => {
+    setModalType("lost");
+    openModal();
+  };
+  const foundClick = () => {
+    setModalType("found");
+    openModal();
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="page">
+      <img src={Hat} alt="Hat" className="decor hat" />
+      <img src={Coat} alt="Coat" className="decor coat" />
+      <img src={Bike} alt="Bike" className="decor bike" />
+      
+      <div id="main-buttons-group">
+        <ButtonDiv onClick={lostClick}>
+          <img className="main-button" src={LostButton} alt="Button Icon" />
+        </ButtonDiv>
+        <ButtonDiv onClick={foundClick}>
+          <img className="main-button" src={FoundButton} alt="Button Icon" />
+        </ButtonDiv>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+
+      <Modal open={open} onClose={closeModal}>
+        {modalType === "lost" && <LostContent />}
+        {modalType === "found" && <FoundContent />}
+      </Modal>
+      <div className="bottom-bar"></div>
+    </div>
+  );
 }
 
-export default App
+export default App;

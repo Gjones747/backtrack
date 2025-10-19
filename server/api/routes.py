@@ -1,0 +1,85 @@
+from contextlib import nullcontext
+
+from os import wait
+from flask import Blueprint, request, jsonify
+from src.fetch_vectors import query_by_text
+from src.init_api import upload_base64_image
+
+main = Blueprint('main', __name__)
+
+@main.route("/")
+def home():
+    return "/ endpoint"
+
+@main.route("/addVector", methods=["POST"])
+def addVectorEndpoint():
+
+    """
+
+    request shape for adding to vector store
+
+    {
+        "image": "base64encoded image",
+        "location": "",
+        "description": "",
+        "contact": "",
+    }                         
+
+    """
+
+    try:
+        requestData = request.get_json(force=False)
+        if requestData is None:
+            return jsonify({"error": "Invalid or missing JSON body"}), 400
+    except:
+        return jsonify({"error": "Malformed JSON syntax"}), 400
+
+    required_fields = ["image", "location", "description", "contact"]
+    missing_fields = [f for f in required_fields if f not in requestData]
+
+    if missing_fields:
+        return jsonify({
+            "error": "Missing required fields",
+            "missing": missing_fields
+        }), 400
+
+    if not isinstance(requestData["image"], str):
+        return jsonify({"error": "Field 'image' must be a base64 string"}), 400
+
+    imageData = requestData["image"]
+    locationData = requestData["location"]
+    description = requestData["description"]
+    contact = requestData["contact"]
+
+    upload_base64_image(imageData, locationData, description, contact)
+
+    return jsonify({"message": "Vector added successfully"}), 200
+
+
+
+@main.route("/getVector", methods=["GET"])
+def getVectorEndpoint():
+    
+    """
+    request shape
+
+    http://127.0.0.1:5000/getVector?type=description&data=red%20apple%20with%20leafy%20stem
+    """
+
+    if 'type' not in request.args:
+        return jsonify({"error": "Missing required parameter: type"}), 400
+
+    if "data" not in request.args:
+        return jsonify({"error": "Missing required parameter: data"}), 400
+
+    type = request.args.get("type")
+    data = request.args.get("data")
+    print("here")
+
+    if type == "description":
+        print("we in descript")
+        results = query_by_text(data)
+        print(results)
+        return results
+
+    return ""

@@ -13,6 +13,7 @@ import hashlib
 from wand.image import Image as im
 from fetch_vectors import query_by_text
 
+
 load_dotenv()
 
 model_id = 'laion/CLIP-ViT-H-14-laion2B-s32B-b79K'
@@ -122,6 +123,5 @@ def upload_base64_image(base64_str, location="", description = "", contact_info 
     except Exception as e:
         print(f"❌ Error uploading image: {e}")
         raise
-
 
 

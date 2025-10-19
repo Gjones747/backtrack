@@ -1,13 +1,85 @@
-#main-buttons-group{
+body, #root {
+  height: 100vh;             
   display: flex;
-  flex-direction: column; 
-  justify-content: center; 
-  align-items: center;     
-  gap: 10px;
+  justify-content: center;   
+  align-items: center;       
+  margin: 0;
+  overflow: hidden;
 }
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+
+#main-buttons-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
 }
+
+.main-button {
+  height: 50px;
+}
+
+.page {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+
+  /* darker paper lines */
+  background: repeating-linear-gradient(
+    #f8f1d8,
+    #f8f1d8 28px,
+    #d2bfa3 29px
+  );
+
+  position: relative;
+  overflow: hidden;
+  font-family: "Poppins", sans-serif;
+}
+
+/* mint header bar */
+.page::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  background-color: #aee4e0;
+  z-index: 2;
+}
+
+/* red margin line */
+.page::after {
+  content: "";
+  position: absolute;
+  left: 60px; /* distance from left edge */
+  top: 0;
+  height: 100%;
+  width: 2px;
+  background-color: #e25d5d;
+  z-index: 1;
+}
+
+/* use an inner div for the bottom mint bar */
+.page .bottom-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  background-color: #aee4e0;
+  z-index: 2;
+}
+
+
+.decor {
+  position: absolute;
+  width: 60px;
+}
+
+.hat { top: 30px; right: 120px; }
+.coat { bottom: 40px; right: 40px; width: 85px;}
+.bike { bottom: 120px; left: 70px; width: 100px;}

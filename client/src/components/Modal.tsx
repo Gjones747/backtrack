@@ -13,6 +13,8 @@ export default function Modal({ open, onClose, children }) {
     borderRadius: "0px",
     cursor: "pointer",
     padding: "8px 12px",
+    outline: "3px solid #23415c",
+
   };
 
   return (

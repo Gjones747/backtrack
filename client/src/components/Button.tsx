@@ -1,23 +1,21 @@
-import React from 'react';
+import React from "react";
 
-// Custom "button" made from a div
-export default function ButtonDiv({ label, onClick }) {
+export default function ButtonDiv({ onClick, children }) {
   const style: React.CSSProperties = {
-    display: 'inline-block',
-    padding: '10px 16px',
-    backgroundColor: '#007bff',
-    color: 'white',
-    borderRadius: '8px',
-    cursor: 'pointer',
-    userSelect: 'none',
-    textAlign: 'center',
-    width: '100px',
-    transition: 'background-color 0.2s',
+    display: "flex", 
+    justifyContent: "center", 
+    alignItems: "center", 
+    padding: "10px 16px",
+    borderRadius: "8px",
+    cursor: "pointer",
+    userSelect: "none",
+    width: "100px",
+    transition: "background-color 0.2s",
   };
 
   const hoverStyle: React.CSSProperties = {
     ...style,
-    backgroundColor: '#0056b3',
+    filter: "brightness(0.6)",
   };
 
   const [isHovered, setIsHovered] = React.useState(false);
@@ -29,7 +27,7 @@ export default function ButtonDiv({ label, onClick }) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {label}
+      {children}
     </div>
   );
 }

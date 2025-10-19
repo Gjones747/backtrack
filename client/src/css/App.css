@@ -14,6 +14,16 @@ body,
   align-items: center;
   margin: 0;
   overflow: hidden;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+#root,
+.page {
+  height: 100vh; /* Make the entire React app fill the screen */
+  overflow: hidden;
+  position: relative;
 }
 
 #main-buttons-group {

@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import uploadImg from "../assets/download.png";
+import footprints from "../assets/footprints.png";
 import placeHolderImg from "../assets/placeholder.png";
 import "../css/Shake.css";
 
@@ -20,19 +21,24 @@ export default function LostContent() {
 
   async function getAndDisplayVectorData(type, data) {
     // 1. Declare 'result' outside the try block
-    let result = null; 
+    let result = null;
 
     try {
-      const response = await fetch(`https://backtrack.kaolun.site/getVector?type=${type}&data=${data}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `https://backtrack.kaolun.site/getVector?type=${type}&data=${data}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (!response.ok) {
         // If the response status is 4xx or 5xx
-        throw new Error(`Network response was not ok: ${response.status} ${response.statusText}`);
+        throw new Error(
+          `Network response was not ok: ${response.status} ${response.statusText}`
+        );
       }
 
       // Assign the successfully parsed data to 'result'
@@ -40,29 +46,27 @@ export default function LostContent() {
       console.log("✅ Success:", result);
 
       // 2. Put the logic that uses 'result' INSIDE the try block
-      
+
       // Safety check: Ensure the result is an array and has at least one item
       if (!Array.isArray(result)) {
-          console.error("❌ Error: Result is empty or not an array.");
-          return; // Stop execution if data is bad
+        console.error("❌ Error: Result is empty or not an array.");
+        return; // Stop execution if data is bad
       }
-
 
       // 3. Remove unnecessary 'await' for property access
       const firstResult = result[0];
       let image = firstResult.metadata.image_data;
-      image = `data:image/png;base64,${image}`
-      console.log(image)
+      image = `data:image/png;base64,${image}`;
+      console.log(image);
       let location = firstResult.metadata.location;
       let contact = firstResult.metadata.contact;
-      
+
       // Call the display function
       displayResult({
-          imageBase64: image,
-          location: location,
-          contact: contact,
+        imageBase64: image,
+        location: location,
+        contact: contact,
       });
-
     } catch (error) {
       // This catches network errors, JSON parsing errors, and the error thrown above
       console.error("❌ Error processing vector data:", error.message);
@@ -77,12 +81,12 @@ export default function LostContent() {
         if (file) {
           const base64String = (reader.result as string).split(",")[1];
           const output = { base64String, text };
-          reqResult = getAndDisplayVectorData("image", base64String)
+          reqResult = getAndDisplayVectorData("image", base64String);
         } else {
-          const output = { text }
+          const output = { text };
         }
-        
-        console.log(result)
+
+        console.log(result);
         // get response as a json, input it into dummy response, make sure to rename json name thing accordingly throughout code
 
         // Example dummy response
@@ -95,8 +99,7 @@ export default function LostContent() {
       if (file) {
         reader.readAsDataURL(file);
       } else {
-        getAndDisplayVectorData("description", text)
-    
+        getAndDisplayVectorData("description", text);
       }
     } else {
       setShake(true);
@@ -172,7 +175,7 @@ export default function LostContent() {
   const containerStyle: React.CSSProperties = {
     position: "relative",
     width: "75%",
-    height: "30%",
+    height: "100%",
     display: "flex",
     flexDirection: "column",
     alignItems: "flex-end",
@@ -184,13 +187,14 @@ export default function LostContent() {
     backgroundColor: "white",
     color: "black",
     width: "100%",
-    height: "100%",
+    height: "30%",
+    fontSize: "16px",
     boxSizing: "border-box",
   };
 
   const counterStyle: React.CSSProperties = {
     textAlign: "right",
-    fontSize: "12px",
+    fontSize: "16px",
     color: text.length === MAX_CHARS ? "red" : "gray",
     marginTop: "2px",
   };
@@ -231,7 +235,7 @@ export default function LostContent() {
 
   return (
     <>
-      <div style={{ color: "black" }}>Upload an image of your item.</div>
+      {/* <div style={{ color: "black" }}>Upload an image of your item.</div>
 
       <input
         type="file"
@@ -247,11 +251,10 @@ export default function LostContent() {
         onClick={handleUploadClick}
       >
         <img src={preview || uploadImg} alt="Preview" style={imageStyle} />
-      </button>
+      </button> */}
 
-      <div style={{ color: "black" }}>
-        Describing your image is also helpful.
-      </div>
+
+      <div style={{ color: "black", paddingTop:"5vh" }}>Please describe your image.</div>
 
       <div style={containerStyle}>
         <textarea
@@ -263,9 +266,15 @@ export default function LostContent() {
         <div style={counterStyle}>
           {text.length}/{MAX_CHARS}
         </div>
-        <button style={buttonStyle} onClick={search}>
+        <button
+          className={shake ? "shake" : ""}
+          style={buttonStyle}
+          onClick={search}
+        >
           Find your item
         </button>
+              <img style={{alignSelf:"center", position: "absolute", height:"50%", paddingTop:"0px", bottom:"0px"}} src={footprints}></img>
+
       </div>
     </>
   );

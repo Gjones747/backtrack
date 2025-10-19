@@ -14,7 +14,7 @@ import Dot9 from "./assets/dot9.png";
 import Dot4 from "./assets/dot4.png";
 import X from "./assets/x.png";
 import Squiggle from "./assets/squiggle.png";
-import Curve from "./assets/Curve.png";
+import Curve from "./assets/curve.png";
 import "./css/App.css";
 
 

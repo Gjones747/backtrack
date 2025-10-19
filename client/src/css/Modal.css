@@ -13,6 +13,12 @@
 
 /* The actual modal box */
 .modal-content {
+  position: relative;
+  display: flex;
+  flex-direction: column; 
+  justify-content: center; 
+  align-items: center;     
+  gap: 10px;
   background: white;
   padding: 20px;
   border-radius: 12px;

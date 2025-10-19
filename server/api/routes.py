@@ -65,9 +65,12 @@ def getVectorEndpoint():
 
     type = request.args.get("type")
     data = request.args.get("data")
+    print("here")
 
     if type == "description":
+        print("we in descript")
         results = query_by_text(data)
+        print(results)
         return results
 
     return ""

@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import placeHolImg from "../assets/placeholder.png";
+import placeHolImg from "../assets/download.png";
 import "../css/Shake.css";
 
 export default function LostContent() {

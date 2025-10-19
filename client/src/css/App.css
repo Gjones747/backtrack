@@ -15,7 +15,7 @@ body, #root {
 }
 
 .main-button {
-  height: 50px;
+  height: 70px;
 }
 
 .page {
@@ -80,6 +80,22 @@ body, #root {
   width: 60px;
 }
 
-.hat { top: 30px; right: 120px; }
+.curve {
+  bottom: 520px;
+  right: 260px;
+  width: 40px;
+  transform: rotate(-160deg);
+}
+
+
+.hat { top: 120px; right: 120px; }
 .coat { bottom: 40px; right: 40px; width: 85px;}
 .bike { bottom: 120px; left: 70px; width: 100px;}
+.dot8 { bottom: 405px; right: 300px; width: 50px;}
+.dot9 { bottom: 325px; right: 45px; width: 45px;}
+.dot4 { bottom: 85px; right: 305px; width: 25px;}
+.x { bottom: 430px; right: 105px; width: 15px;}
+.x1 { bottom: 330px; right: 305px; width: 15px;}
+.x2 { bottom: 200px; right: 45px; width: 15px;}
+.squiggle { bottom: 120px; right: 60px; width: 80px;}
+.curve { bottom: 520px; right: 260px; width: 40px;}

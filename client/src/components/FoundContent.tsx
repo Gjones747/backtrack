@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Webcam from "react-webcam";
 
-export default function CameraView() {
+export default function FoundContent() {
   // capturing the image --------------------------
   const circleButtonStyle: React.CSSProperties = {
     width: "50px",

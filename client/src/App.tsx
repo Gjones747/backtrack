@@ -2,8 +2,7 @@ import React from "react";
 import ButtonDiv from "./components/Button";
 import Modal from "./components/Modal";
 import FoundContent from "./components/FoundContent";
-// import LostContent from "./components/LostContent";
-
+import LostContent from "./components/LostContent";
 
 import "./css/App.css";
 
@@ -37,7 +36,7 @@ function App() {
       </div>
 
       <Modal open={open} onClose={closeModal}>
-        {/* {modalType === "lost" && <LostContent />} */}
+        {modalType === "lost" && <LostContent />}
         {modalType === "found" && <FoundContent />}
       </Modal>
     </>

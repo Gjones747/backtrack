@@ -7,9 +7,11 @@ name = "pypi"
 boto3 = "*"
 python-dotenv = "*"
 flask = "*"
+pillow = "*"
+transformers = "*"
+torch = "*"
 
 [dev-packages]
 
 [requires]
 python_version = "3.14"
-

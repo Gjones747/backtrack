@@ -7,8 +7,12 @@ from PIL import Image
 from transformers import CLIPProcessor, CLIPModel
 import torch
 import base64
+from io import BytesIO
 import io
 import hashlib
+from wand.image import Image as im
+from fetch_vectors import query_by_text
+
 
 load_dotenv()
 
@@ -34,12 +38,64 @@ s3vectors = boto3.client(
     region_name=REGION
 )
 
+def image_to_base64(img, format="JPEG"):
+    """
+    Convert a PIL Image object to a base64-encoded string.
+    
+    Args:
+        img (PIL.Image): Image object.
+        format (str): Image format for encoding (e.g., 'JPEG', 'PNG').
+    
+    Returns:
+        str: Base64-encoded string of the image.
+    """
+    buffer = BytesIO()
+    img.save(buffer, format="JPEG")
+    buffer.seek(0)
+    img_bytes = buffer.read()
+    b64_string = base64.b64encode(img_bytes).decode('utf-8')
+    return b64_string
+
+def resize_image(img):
+    """
+    Resize an image to 50% of its original size and return the resized image and its resolution.
+    
+    Args:
+        image_path (str): Path to the input image.
+    
+    Returns:
+        tuple: (resized_image (PIL.Image), resolution (tuple of width, height))
+    """
+    # Open the image
+    buffer = BytesIO()
+    img.save(buffer, format="JPEG")
+    size_kb = len(buffer.getvalue()) / 1024
+    while(size_kb > 29):
+        # Compute new size (50%)
+        new_size = (img.width // 2, img.height // 2)
+        
+        # Resize image
+        img = img.resize(new_size, resample=Image.Resampling.LANCZOS)
+
+        buffer = BytesIO()
+        img.save(buffer, format="JPEG")
+        size_kb = len(buffer.getvalue()) / 1024
+    
+    # Return resized image and resolution
+    return img
 
 def upload_base64_image(base64_str, location="", description = "", contact_info = ""):
     try:
         # Decode base64 string into image
+        # print("IMAGE PRE", len(base64_str))
+
+        
+
         image_data = base64.b64decode(base64_str, validate=True)
-        image = Image.open(io.BytesIO(image_data))
+        image = (Image.open(io.BytesIO(image_data)))
+        image_new = resize_image(image)
+
+
         hash_value = hashlib.sha256(image_data).hexdigest()
 
         # Preprocess and get embedding
@@ -56,7 +112,7 @@ def upload_base64_image(base64_str, location="", description = "", contact_info 
                 {
                     "key": hash_value,
                     "data": {"float32": embedding.tolist()},
-                    "metadata": {"location": location, "description": description, "contact_info": contact_info, "image_data": base64_str}
+                    "metadata": {"location": location, "description": description, "contact_info": contact_info, "image_data": image_to_base64(image_new)}
                 }
             ]
         )

@@ -66,13 +66,8 @@ def query_by_text(query_text, top_k=3):
         returnDistance=True,
         returnMetadata=True
     )
-    print(json.dumps(response["vectors"], indent=2))
+    data = json.dumps(response["vectors"])
+    print(data)
+    return data
 
-# ---- Example usage ----
-if __name__ == "__main__":
-    # print("🔍 Searching by image:")
-    # query_by_image(input_file)
 
-    print("\n🔍 Searching by text ('red apple'):")
-    x = input("WHAT DO YOU WANT TO SEARCH FOR: ")
-    query_by_text(x)

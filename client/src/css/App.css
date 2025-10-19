@@ -1,8 +1,9 @@
-body, #root {
-  height: 100vh;             
+body,
+#root {
+  height: 100vh;
   display: flex;
-  justify-content: center;   
-  align-items: center;       
+  justify-content: center;
+  align-items: center;
   margin: 0;
   overflow: hidden;
 }
@@ -28,11 +29,7 @@ body, #root {
   gap: 20px;
 
   /* darker paper lines */
-  background: repeating-linear-gradient(
-    #f8f1d8,
-    #f8f1d8 28px,
-    #d2bfa3 29px
-  );
+  background: repeating-linear-gradient(#f8f1d8, #f8f1d8 28px, #d2bfa3 29px);
 
   position: relative;
   overflow: hidden;
@@ -74,12 +71,9 @@ body, #root {
   z-index: 2;
 }
 
-
 .decor {
   position: absolute;
-  width: 60px;
 }
-
 
 .curve {
   bottom: 520px;
@@ -88,68 +82,68 @@ body, #root {
   transform: rotate(-160deg);
 }
 
-
-.hat { 
-  top: calc(120 / 667 * 100vh);    /* ≈ 18.0vh */
-  right: calc(120 / 375 * 100vw);  /* ≈ 32.0vw */
+.hat {
+  top: calc(120 / 667 * 100vh); /* ≈ 18.0vh */
+  right: calc(120 / 375 * 100vw); /* ≈ 32.0vw */
+  width: 65px;
 }
 
-.coat { 
-  bottom: calc(40 / 667 * 100vh);  /* ≈ 6.0vh */
-  right: calc(40 / 375 * 100vw);   /* ≈ 10.7vw */
-  width: calc(85 / 375 * 100vw);   /* ≈ 22.7vw */
+.coat {
+  bottom: calc(40 / 667 * 100vh); /* ≈ 6.0vh */
+  right: calc(40 / 375 * 100vw); /* ≈ 10.7vw */
+  width: 80px; /* ≈ 22.7vw */
 }
 
-.bike { 
+.bike {
   bottom: calc(120 / 667 * 100vh); /* ≈ 18.0vh */
-  left: calc(70 / 375 * 100vw);    /* ≈ 18.7vw */
-  width: calc(100 / 375 * 100vw);  /* ≈ 26.7vw */
+  left: calc(70 / 375 * 100vw); /* ≈ 18.7vw */
+  width: 110px;
 }
 
-.dot8 { 
+.dot8 {
   bottom: calc(405 / 667 * 100vh); /* ≈ 60.7vh */
-  right: calc(300 / 375 * 100vw);  /* ≈ 80.0vw */
-  width: calc(50 / 375 * 100vw);   /* ≈ 13.3vw */
+  right: calc(300 / 375 * 100vw); /* ≈ 80.0vw */
+  width: calc(50 / 375 * 100vw); /* ≈ 13.3vw */
 }
 
-.dot9 { 
+.dot9 {
   bottom: calc(325 / 667 * 100vh); /* ≈ 48.7vh */
-  right: calc(45 / 375 * 100vw);   /* ≈ 12.0vw */
-  width: calc(45 / 375 * 100vw);   /* ≈ 12.0vw */
+  right: calc(45 / 375 * 100vw); /* ≈ 12.0vw */
+  width: calc(45 / 375 * 100vw); /* ≈ 12.0vw */
 }
 
-.dot4 { 
-  bottom: calc(85 / 667 * 100vh);  /* ≈ 12.7vh */
-  right: calc(305 / 375 * 100vw);  /* ≈ 81.3vw */
-  width: calc(25 / 375 * 100vw);   /* ≈ 6.7vw */
+.dot4 {
+  bottom: calc(85 / 667 * 100vh); /* ≈ 12.7vh */
+  right: calc(305 / 375 * 100vw); /* ≈ 81.3vw */
+  width: calc(25 / 375 * 100vw); /* ≈ 6.7vw */
 }
 
-.x { 
+.x {
   bottom: calc(430 / 667 * 100vh); /* ≈ 64.5vh */
-  right: calc(105 / 375 * 100vw);  /* ≈ 28.0vw */
-  width: calc(15 / 375 * 100vw);   /* ≈ 4.0vw */
+  right: calc(105 / 375 * 100vw); /* ≈ 28.0vw */
+  width: calc(15 / 375 * 100vw); /* ≈ 4.0vw */
 }
 
-.x1 { 
+.x1 {
   bottom: calc(330 / 667 * 100vh); /* ≈ 49.5vh */
-  right: calc(305 / 375 * 100vw);  /* ≈ 81.3vw */
-  width: calc(15 / 375 * 100vw);   /* ≈ 4.0vw */
+  right: calc(305 / 375 * 100vw); /* ≈ 81.3vw */
+  width: calc(15 / 375 * 100vw); /* ≈ 4.0vw */
 }
 
-.x2 { 
+.x2 {
   bottom: calc(200 / 667 * 100vh); /* ≈ 30.0vh */
-  right: calc(45 / 375 * 100vw);   /* ≈ 12.0vw */
-  width: calc(15 / 375 * 100vw);   /* ≈ 4.0vw */
+  right: calc(45 / 375 * 100vw); /* ≈ 12.0vw */
+  width: calc(15 / 375 * 100vw); /* ≈ 4.0vw */
 }
 
-.squiggle { 
+.squiggle {
   bottom: calc(120 / 667 * 100vh); /* ≈ 18.0vh */
-  right: calc(60 / 375 * 100vw);   /* ≈ 16.0vw */
-  width: calc(80 / 375 * 100vw);   /* ≈ 21.3vw */
+  right: calc(60 / 375 * 100vw); /* ≈ 16.0vw */
+  width: calc(80 / 375 * 100vw); /* ≈ 21.3vw */
 }
 
-.curve { 
+.curve {
   bottom: calc(520 / 667 * 100vh); /* ≈ 78.0vh */
-  right: calc(260 / 375 * 100vw);  /* ≈ 69.3vw */
-  width: calc(40 / 375 * 100vw);   /* ≈ 10.7vw */
+  right: calc(260 / 375 * 100vw); /* ≈ 69.3vw */
+  width: calc(40 / 375 * 100vw); /* ≈ 10.7vw */
 }

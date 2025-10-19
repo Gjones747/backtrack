@@ -6,8 +6,8 @@ import FoundButton from "./assets/found.png";
 import LostContent from "./components/LostContent";
 import LostButton from "./assets/lost.png";
 import Hat from "./assets/hat.png";
-import Coat from "./assets/coat.png"
-import Bike from "./assets/bike.png"
+import Coat from "./assets/coat.png";
+import Bike from "./assets/bike.png";
 import Dot8 from "./assets/dot8.png";
 import Dot9 from "./assets/dot9.png";
 import Dot4 from "./assets/dot4.png";
@@ -45,14 +45,14 @@ function App() {
       <img src={Coat} alt="Coat" className="decor coat" />
       <img src={Bike} alt="Bike" className="decor bike" />
 
-      <img src={Dot8} alt="Dot8" className="decor dot8"/>
-      <img src={Dot9} alt="Dot9" className="decor dot9"/>
-      <img src={X} alt="X" className="decor x"/>
-      <img src={X} alt="X" className="decor x1"/>
-      <img src={X} alt="X" className="decor x2"/>
-      <img src={Squiggle} alt="Squiggle" className="decor squiggle"/>
-      <img src={Curve} alt="Curve" className="decor curve"/>
-      <img src={Dot4} alt="Dot4" className="decor dot4"/>
+      <img src={Dot8} alt="Dot8" className="decor dot8" />
+      <img src={Dot9} alt="Dot9" className="decor dot9" />
+      <img src={X} alt="X" className="decor x" />
+      <img src={X} alt="X" className="decor x1" />
+      <img src={X} alt="X" className="decor x2" />
+      <img src={Squiggle} alt="Squiggle" className="decor squiggle" />
+      <img src={Curve} alt="Curve" className="decor curve" />
+      <img src={Dot4} alt="Dot4" className="decor dot4" />
 
       <div id="main-buttons-group">
         <ButtonDiv onClick={lostClick}>

@@ -24,7 +24,6 @@ export default function LostContent() {
       reader.onloadend = () => {
         const base64String = (reader.result as string).split(",")[1];
         const output = { base64String, text };
-        console.log(output);
 
         // get response as a json, input it into dummy response, make sure to rename json name thing accordingly throughout code
 
@@ -49,6 +48,7 @@ export default function LostContent() {
   }) => {
     setStage("result");
     setResult(response);
+    console.log(response);
   };
 
   const reset = () => {
@@ -169,15 +169,6 @@ export default function LostContent() {
   return (
     <>
       <div style={{ color: "black" }}>Upload an image of your item.</div>
-
-
-      <div
-        id="uploadImg"
-        className={shake ? "shake" : ""}
-        style={imageWrapperStyle}
-      >
-        <img src={preview || placeHolImg} alt="Preview" style={imageStyle} />
-      </div>
 
       <input
         type="file"

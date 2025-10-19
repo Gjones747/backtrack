@@ -157,6 +157,7 @@ export default function FoundContent({ onClose }) {
     color: "black",
     textAlign: "center",
     padding: "30px",
+    overflow: "hidden",
   };
 
   return (
@@ -240,6 +241,7 @@ export default function FoundContent({ onClose }) {
           style={{
             ...thanksStyle,
             width: "100%",
+            overflowX: "hidden", 
             display: "flex",
             justifyContent: "center",
             alignItems: "center",

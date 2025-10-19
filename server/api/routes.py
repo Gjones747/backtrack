@@ -57,6 +57,13 @@ def addVectorEndpoint():
 
 @main.route("/getVector", methods=["GET"])
 def getVectorEndpoint():
+    
+    """
+    request shape
+
+    http://127.0.0.1:5000/getVector?type=description&data=red%20apple%20with%20leafy%20stem
+    """
+
     if 'type' not in request.args:
         return jsonify({"error": "Missing required parameter: type"}), 400
 

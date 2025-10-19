@@ -11,6 +11,7 @@ export default function ButtonDiv({ onClick, children }) {
     userSelect: "none",
     width: "100px",
     transition: "background-color 0.2s",
+    zIndex: "10",
   };
 
   const hoverStyle: React.CSSProperties = {

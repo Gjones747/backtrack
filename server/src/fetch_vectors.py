@@ -27,29 +27,25 @@ s3vectors = boto3.client(
     region_name=REGION
 )
 
-# Query text to convert to an embedding. 
-input_text = "going into the sea"
+def getVectors(description):              
 
-# Generate the vector embedding.
-response = bedrock.invoke_model(
-    modelId="amazon.titan-embed-text-v2:0",
-    body=json.dumps({"inputText": input_text})
-) 
+    response = bedrock.invoke_model(
+        modelId="amazon.titan-embed-text-v2:0",
+        body=json.dumps({"inputText": description})
+    ) 
 
-# Extract embedding from response.
-model_response = json.loads(response["body"].read())
-embedding = model_response["embedding"]
+    model_response = json.loads(response["body"].read())
+    embedding = model_response["embedding"]
 
-# Query vector index.
-response = s3vectors.query_vectors(
-    vectorBucketName="tester",
-    indexName="movies",
-    queryVector={"float32": embedding}, 
-    topK=3, 
-    returnDistance=True,
-    returnMetadata=True
-)
-print(json.dumps(response["vectors"][0], indent=2))
+    response = s3vectors.query_vectors(
+        vectorBucketName="back-track-vector-bucket",
+        indexName="main",
+        queryVector={"float32": embedding}, 
+        topK=3, 
+        returnDistance=True,
+        returnMetadata=True
+    )
+    return json.dumps(response["vectors"])
 
 # # Query vector index with a metadata filter.
 # response = s3vectors.query_vectors(

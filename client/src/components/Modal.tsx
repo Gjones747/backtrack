@@ -7,7 +7,7 @@ export default function Modal({ open, onClose, children }) {
     position: "absolute",
     top: "0px",
     right: "0px",
-    background: "red",
+    background: "#F89694",
     color: "white",
     border: "none",
     borderRadius: "0px",

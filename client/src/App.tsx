@@ -5,6 +5,7 @@ import FoundContent from "./components/FoundContent";
 import FoundButton from "./assets/found.png";
 import LostContent from "./components/LostContent";
 import LostButton from "./assets/lost.png";
+import Logo from "./assets/logo.png";
 import Hat from "./assets/hat.png";
 import Coat from "./assets/coat.png";
 import Bike from "./assets/bike.png";
@@ -44,7 +45,6 @@ function App() {
       <img src={Hat} alt="Hat" className="decor hat" />
       <img src={Coat} alt="Coat" className="decor coat" />
       <img src={Bike} alt="Bike" className="decor bike" />
-
       <img src={Dot8} alt="Dot8" className="decor dot8" />
       <img src={Dot9} alt="Dot9" className="decor dot9" />
       <img src={X} alt="X" className="decor x" />
@@ -55,6 +55,15 @@ function App() {
       <img src={Dot4} alt="Dot4" className="decor dot4" />
 
       <div id="main-buttons-group">
+        <img
+          src={Logo}
+          style={{
+            width: "300px",
+            position: "absolute",
+            top: "30px",
+            zIndex: "10px",
+          }}
+        ></img>
         <ButtonDiv onClick={lostClick}>
           <img className="main-button" src={LostButton} alt="Button Icon" />
         </ButtonDiv>

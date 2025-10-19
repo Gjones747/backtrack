@@ -1,7 +1,9 @@
 from contextlib import nullcontext
+
 from os import wait
 from flask import Blueprint, request, jsonify
 from src.fetch_vectors import query_by_text
+from src.init_api import upload_base64_image
 
 main = Blueprint('main', __name__)
 
@@ -49,7 +51,7 @@ def addVectorEndpoint():
     description = requestData["description"]
     contact = requestData["contact"]
 
-    # call add vector command
+    upload_base64_image(imageData, locationData, description, contact)
 
     return jsonify({"message": "Vector added successfully"}), 200
 

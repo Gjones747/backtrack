@@ -19,7 +19,11 @@
   justify-content: center; 
   align-items: center;     
   gap: 10px;
-  background: white;
+  background: repeating-linear-gradient(
+    #f8f1d8,
+    #f8f1d8 28px,
+    #d2bfa3 29px
+  );
   outline: 3px solid #23415c;
   padding: 20px;
   border-radius: 12px;

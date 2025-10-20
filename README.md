@@ -1,6 +1,7 @@
 # <img width="400" alt="image" src="https://github.com/user-attachments/assets/a30ba99a-5bd9-4c82-bad0-0c46e02c4012" />
 Built for DubHacks 2025  
 **-NOTE-github pages will remain up probably but the server it connects to will go down as of 10/20/25**
+
 **WARNING-Definitely has bugs**
 
 A low overhead web-app that leverages AI to help users find their stuff! Allows users to quickly and effortlessly snap pictures of items they find as well as 

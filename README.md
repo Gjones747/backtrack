@@ -18,16 +18,16 @@ previously found items.
 ## Tack Stack/how we built it
 This project has a fairly large tech stack and taught us a lot about the technologies we chose to employ.
 
-#### system architecture
+### system architecture
 We decided to seperate out our client from the server. This is reflected in our filestructure where there are two folders each containing essentially their own completely independent codebases. These two systems talk to each other and transfer data through api endpoints. 
 
-#### client
+### client
 The client was written using react and typescript. This allowed for a dynamic single page application that could be hosted on a static page service like github pages. This made it easy and quick to deploy our prototype.
 
-#### server
+### server
 We wrote the server in python using flask to controll the api endpoints. Python allowed us to run the AI models we needed and also allowed us to hit aws endpoints to use their vectorstore s3. We decided to run our server on an actual computer then tunnel it to the web using cloudflare. 
 
-#### s3 + huggingface encodings
+### s3 + huggingface encodings
 The way our app ends up working is when users upload images they get encoded and added to a vector store. When a user prompts for an item this prompt is encoded then a cosin distance search is preformed to return the vectors that most closely resemble the prompt. To do this we used a huggingface model running locally to make the vector encodings of 1024 dimensions. These encoding are then stored along with metadata in amazons s3 vector store. 
 
 
